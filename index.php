@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(0);
 
 //:: Define the database connection
 mysql_connect("localhost", "actiontec", "actiontec");
