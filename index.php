@@ -20,6 +20,10 @@ $curl = new Curl();
 $curl->url = "192.168.1.254/login.cgi";
 $curl->username = "root";
 
+$sequence = new Sequence();
+
+$sequence->run();
+
 $curl->password = "";
 
 $return = $curl->run();
