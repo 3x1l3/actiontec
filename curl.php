@@ -7,12 +7,20 @@ class Curl {
 	
 	public $url;
 	
+	public $rawhtml;
+	public $encoded;
+	
 	public function __construct() {
 	
 				
 	
 	}
+	
+	public function stringExists($str) {
+	
+		return strstr($this->rawhtml, $str) !== false;
 		
+	}	
 
 	public function run($html = false) {
 		$ch = curl_init();
@@ -32,9 +40,9 @@ class Curl {
 		//return $data;
 		//return ($httpcode>=200 && $httpcode<300) ? $data : false;
 		if ($html) {
-			return nl2br(htmlspecialchars($data));
+			$this->encoded = nl2br(htmlspecialchars($data));
 		} else {
-			return $data;
+			$this->rawhtml = $data;
 		}
 	}
 

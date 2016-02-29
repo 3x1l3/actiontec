@@ -2,12 +2,13 @@
 error_reporting(E_ALL);
 
 //:: Define the database connection
-mysql_connect("localhost","actiontec","actiontec");
-mysql_select_db("actiontec");	
+mysql_connect("localhost", "actiontec", "actiontec");
+mysql_select_db("actiontec");
 
-//::includes 
-require_once('db.php');
-require_once("curl.php");
+//::includes
+require_once ('db.php');
+require_once ("curl.php");
+require_once ("sequence.php");
 
 //::Classes
 $DB = new DB();
@@ -17,13 +18,17 @@ $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*
 
 $curl = new Curl();
 $curl->url = "192.168.1.254/login.cgi";
+$curl->username = "root";
 
-$return = $curl->run(true);
+$curl->password = "";
 
-var_dump($return);
-var_dump(strstr($return, 'index.html?msg=err'));
+$return = $curl->run();
+
+//::If there is not an error.
+if (!$curl->stringExists('index.html?msg=err')) {
+
+} else {//If there is an error.
+
+}
 
 die();
-
-
-
