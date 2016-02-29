@@ -26,6 +26,7 @@ while (true) {
 	$sequence->run();
 	$curl->password = $sequence->getStr();
 	$return = $curl->run();
+	echo $curl->password;
 
 	//::If there is not an error.
 	if (!$curl->stringExists('index.html?msg=err')) {
