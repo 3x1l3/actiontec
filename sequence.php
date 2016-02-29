@@ -80,11 +80,18 @@ class Sequence {
 						$this->chgAtIndex($prevPos, $this->at(0));
 						$prevPos -= 1;
 					}
-
+					
+					//::at the end of it. If prevpos lands on 0 (first position in the str) than tack on an a.
+					if ($prevPos == 0) {
+						$this->str .= $this->at(0);	
+					}
+					
 				}
 
 			} else {
-
+				
+				
+				
 			}
 
 		}
